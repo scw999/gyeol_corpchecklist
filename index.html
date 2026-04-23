@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>행정사 미팅 체크리스트 — 결하다</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+    background: #f5f4f0;
+    color: #1a1a1a;
+    padding: 2rem 1rem;
+    min-height: 100vh;
+  }
+  .container { max-width: 720px; margin: 0 auto; }
+  header { margin-bottom: 1.5rem; }
+  h1 { font-size: 18px; font-weight: 600; margin-bottom: 6px; }
+  .sub { font-size: 13px; color: #666; }
+  .meta { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+  .badge {
+    font-size: 11px; padding: 3px 10px; border-radius: 20px; font-weight: 500;
+  }
+  .badge.w { background: #FEF3C7; color: #92400E; }
+  .badge.i { background: #DBEAFE; color: #1E40AF; }
+  .badge.s { background: #D1FAE5; color: #065F46; }
+
+  .prog-row { display: flex; align-items: center; gap: 10px; margin-bottom: 1.5rem; }
+  .prog-track { flex: 1; height: 6px; background: #e0e0e0; border-radius: 3px; overflow: hidden; }
+  .prog-fill { height: 100%; background: #22c55e; border-radius: 3px; transition: width .3s; }
+  .prog-label { font-size: 12px; color: #888; white-space: nowrap; min-width: 70px; text-align: right; }
+
+  .section { background: #fff; border-radius: 12px; margin-bottom: 10px; overflow: hidden; border: 1px solid #e8e8e8; }
+  .sec-head {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 16px; background: #fafafa;
+    cursor: pointer; user-select: none;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .sec-head:hover { background: #f3f3f3; }
+  .sec-dot {
+    width: 24px; height: 24px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 600; flex-shrink: 0;
+  }
+  .sec-title { font-size: 13px; font-weight: 600; flex: 1; }
+  .sec-stat { font-size: 11px; color: #aaa; }
+  .arrow { font-size: 11px; color: #bbb; transition: transform .2s; }
+  .arrow.closed { transform: rotate(-90deg); }
+
+  .item {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 10px 16px; border-bottom: 1px solid #f5f5f5;
+    cursor: pointer; transition: background .1s;
+  }
+  .item:last-child { border-bottom: none; }
+  .item:hover { background: #fafafa; }
+  .box {
+    width: 16px; height: 16px; border: 1.5px solid #d0d0d0;
+    border-radius: 4px; flex-shrink: 0; margin-top: 2px;
+    transition: all .15s; position: relative;
+  }
+  .item.done .box { background: #22c55e; border-color: #22c55e; }
+  .item.done .box::after {
+    content: '';
+    position: absolute;
+    left: 2px; top: 5px;
+    width: 9px; height: 5px;
+    border-left: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    transform: rotate(-45deg) translateY(-2px);
+  }
+  .item.done .lbl { color: #bbb; text-decoration: line-through; }
+  .lbl { font-size: 13px; line-height: 1.55; flex: 1; }
+  .nt { font-size: 11px; color: #aaa; margin-top: 3px; line-height: 1.4; }
+  .tag {
+    display: inline-block; font-size: 10px;
+    padding: 1px 6px; border-radius: 10px;
+    margin-left: 5px; font-weight: 500; vertical-align: middle;
+  }
+  .tag.urg { background: #FEE2E2; color: #B91C1C; }
+  .tag.doc { background: #DBEAFE; color: #1D4ED8; }
+  .tag.ask { background: #FEF3C7; color: #B45309; }
+
+  .legend { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 1.25rem; }
+  .leg-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: #888; }
+  .leg-dot { width: 8px; height: 8px; border-radius: 2px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>행정사 미팅 체크리스트</h1>
+    <div class="sub">결하다 법인 설립 · 사업자 등록 · 결혼중개업 면허 · 상표권 등록</div>
+  </header>
+
+  <div class="meta">
+    <span class="badge w">⚠ 2주 체류 데드라인</span>
+    <span class="badge i">마곡 공유오피스</span>
+    <span class="badge i">정헌 — 미국 영주권자 / 한국시민</span>
+    <span class="badge s">행정사 턴키 위임</span>
+  </div>
+
+  <div class="prog-row">
+    <div class="prog-track"><div class="prog-fill" id="pfill" style="width:0%"></div></div>
+    <div class="prog-label" id="plabel">0 / 0 완료</div>
+  </div>
+
+  <div class="legend">
+    <div class="leg-item"><div class="leg-dot" style="background:#FCA5A5"></div>필수 — 반드시 확인</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#93C5FD"></div>서류 — 준비 필요</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#FCD34D"></div>질문 — 행정사에게 확인</div>
+  </div>
+
+  <div id="root"></div>
+</div>
+
+<script>
+const sections = [
+  {
+    id:'A', title:'일정 & 위임 범위 확정',
+    color:'#534AB7', bg:'#EEEDFE',
+    items:[
+      {l:'2주 체류 기간 내 완료 가능한 절차 목록 확인', n:'정헌 본인 대면 필수 항목 vs. 대리 가능 항목 분리', t:['urg']},
+      {l:'행정사 직접 처리 범위 vs. 법무사·상표사무소 연계 역할 분담 명시', t:['ask']},
+      {l:'법인설립 → 사업자등록 → 결혼중개업 면허 → 상표권 순서 및 병렬 가능 여부', t:['ask']},
+      {l:'각 단계별 예상 기간 및 총 비용 견적 (행정사 수임료 포함)', t:['ask']},
+      {l:'정헌 출국 후 잔여 절차 대리 진행 방법', t:['ask']},
+    ]
+  },
+  {
+    id:'B', title:'법인 설립 — 주식회사',
+    color:'#185FA5', bg:'#E6F1FB',
+    items:[
+      {l:'발기인 구성 — 창완·정헌 지분율 및 대표이사 설정', t:['ask']},
+      {l:'정관 작성 — 목적 사업에 결혼중개업 명시 필요', n:'사업자등록 전 필수 선행', t:['doc']},
+      {l:'자본금 납입 계좌 개설 및 잔고증명 발급', n:'결혼중개업 법적 최소 자본금 요건 확인', t:['urg','doc']},
+      {l:'법인 인감 제작 및 인감 등록 (설립 후 즉시)', t:['doc']},
+      {l:'등기 완료까지 소요 기간 확인', n:'법원 접수 기준 통상 7~10영업일', t:['ask']},
+      {l:'정헌 영주권자 — 외국인 주주·임원 등기 시 추가 서류 여부', n:'여권 사본 + 인감증명서 또는 서명공증 필요 여부', t:['urg','ask']},
+    ]
+  },
+  {
+    id:'C', title:'사업자 등록',
+    color:'#0F6E56', bg:'#E1F5EE',
+    items:[
+      {l:'법인 등기 완료 후 세무서 사업자등록 신청', n:'법인등기부등본 발급 후 진행', t:['doc']},
+      {l:'업종 코드 확인 — 결혼상담업(75992) 포함 여부', t:['ask']},
+      {l:'마곡 공유오피스 주소 사업자등록 사용 가능 여부', n:'임대차계약서 또는 사용승낙서 필요', t:['urg','doc']},
+      {l:'공유오피스 측 사업자등록용 사용승낙서 발급 여부 사전 확인', t:['urg']},
+      {l:'사업자등록증 발급 기간 (신청 후 통상 1~3일)', t:['ask']},
+    ]
+  },
+  {
+    id:'D', title:'결혼중개업 면허 등록',
+    color:'#BA7517', bg:'#FAEEDA',
+    items:[
+      {l:'신고 관할 — 강서구청 담당 부서 및 담당자 확인', t:['ask']},
+      {l:'사무실 전용면적 요건 확인 — 공유오피스 1인실·2인실 충족 여부', n:'불충족 시 전용 사무실 계약 필요 → 전체 일정의 변수', t:['urg']},
+      {l:'신고 필요 서류 — 법인등기부등본, 사업자등록증, 임대차계약서, 대표이사 신분증', t:['doc']},
+      {l:'결혼중개업법상 교육 이수 요건 (대표자 또는 종사자)', t:['ask']},
+      {l:'국내 결혼중개업 vs. 국제결혼중개업 등록 유형 확인', n:'국제결혼은 별도 등록 + 보증보험 요건 있음', t:['ask']},
+      {l:'신고증 발급 기간', t:['ask']},
+    ]
+  },
+  {
+    id:'E', title:'상표권 등록',
+    color:'#993C1D', bg:'#FAECE7',
+    items:[
+      {l:'"결하다" 유사 상표 사전 검색 결과 공유', n:'키프리스(KIPRIS) 검색 스크린샷 미팅 전 준비', t:['urg']},
+      {l:'상표 출원 대리 — 행정사 직접 or 변리사 연계 여부', t:['ask']},
+      {l:'출원 분류 — 45류(결혼중개업) + 42류(앱/SW) 동시 출원 권고', t:['ask']},
+      {l:'출원 후 심사 기간 및 조기심사 신청 가능 여부', n:'통상 6~12개월, 조기심사 시 2~3개월 단축 가능', t:['ask']},
+      {l:'관납료 + 대리인 비용 견적', t:['ask']},
+    ]
+  },
+  {
+    id:'F', title:'정헌 — 영주권자 특이사항',
+    color:'#993556', bg:'#FBEAF0',
+    items:[
+      {l:'주민등록 말소 여부 확인 — 인감증명서 발급 가능한지', n:'말소 시 재외국민 서명공증(공증사무소)으로 대체', t:['urg','doc']},
+      {l:'정헌 입국 중 필수 처리 항목 vs. 사전 서류 발송 가능 항목 분리', t:['urg']},
+      {l:'법인 통장 개설 — 정헌 대면 필요 여부 (은행별 상이)', n:'대표이사 방문 필수인 은행 사전 확인', t:['ask']},
+      {l:'출국 후 원격 운영 — 위임장·전자서명 방법 확인', t:['ask']},
+    ]
+  },
+  {
+    id:'G', title:'공유오피스 (마곡) 관련',
+    color:'#3B6D11', bg:'#EAF3DE',
+    items:[
+      {l:'1인실 vs. 2인실 선택 전 결혼중개업 면적 요건 충족 여부 확인', n:'면적 기준 미달 시 계약 전 재검토 필요', t:['urg']},
+      {l:'사업자등록용 사용승낙서 발급 가능 여부 공유오피스 측 확인', t:['urg','doc']},
+      {l:'임대차계약서 법인 명의 체결 가능 시점', n:'법인 설립 완료 후 법인 명의로 계약 필요', t:['ask']},
+      {l:'구청 결혼중개업 신고 시 공유오피스 주소 수리 전례 행정사에게 확인', t:['ask']},
+    ]
+  },
+];
+
+function build() {
+  const root = document.getElementById('root');
+  sections.forEach(sec => {
+    const wrap = document.createElement('div');
+    wrap.className = 'section';
+
+    const head = document.createElement('div');
+    head.className = 'sec-head';
+
+    const dot = document.createElement('div');
+    dot.className = 'sec-dot';
+    dot.style.cssText = `background:${sec.bg};color:${sec.color}`;
+    dot.textContent = sec.id;
+
+    const title = document.createElement('div');
+    title.className = 'sec-title';
+    title.textContent = sec.title;
+
+    const stat = document.createElement('div');
+    stat.className = 'sec-stat';
+    stat.id = 'stat-' + sec.id;
+    stat.textContent = sec.items.length + '항목';
+
+    const arrow = document.createElement('div');
+    arrow.className = 'arrow';
+    arrow.id = 'arr-' + sec.id;
+    arrow.textContent = '▼';
+
+    head.appendChild(dot);
+    head.appendChild(title);
+    head.appendChild(stat);
+    head.appendChild(arrow);
+
+    const body = document.createElement('div');
+    body.className = 'sec-body';
+    body.id = 'body-' + sec.id;
+
+    sec.items.forEach((item, i) => {
+      const row = document.createElement('div');
+      row.className = 'item';
+
+      const box = document.createElement('div');
+      box.className = 'box';
+
+      const right = document.createElement('div');
+      right.style.flex = '1';
+
+      const lbl = document.createElement('div');
+      lbl.className = 'lbl';
+      lbl.textContent = item.l;
+
+      (item.t || []).forEach(t => {
+        const tag = document.createElement('span');
+        tag.className = 'tag ' + t;
+        tag.textContent = t === 'urg' ? '필수' : t === 'doc' ? '서류' : '질문';
+        lbl.appendChild(tag);
+      });
+
+      right.appendChild(lbl);
+
+      if (item.n) {
+        const nt = document.createElement('div');
+        nt.className = 'nt';
+        nt.textContent = item.n;
+        right.appendChild(nt);
+      }
+
+      row.appendChild(box);
+      row.appendChild(right);
+
+      row.addEventListener('click', () => {
+        row.classList.toggle('done');
+        updateProg();
+      });
+
+      body.appendChild(row);
+    });
+
+    let open = true;
+    head.addEventListener('click', () => {
+      open = !open;
+      body.style.display = open ? '' : 'none';
+      arrow.classList.toggle('closed', !open);
+    });
+
+    wrap.appendChild(head);
+    wrap.appendChild(body);
+    root.appendChild(wrap);
+  });
+
+  updateProg();
+}
+
+function updateProg() {
+  const all = document.querySelectorAll('.item');
+  const done = document.querySelectorAll('.item.done');
+  const pct = all.length ? Math.round(done.length / all.length * 100) : 0;
+  document.getElementById('pfill').style.width = pct + '%';
+  document.getElementById('plabel').textContent = done.length + ' / ' + all.length + ' 완료';
+}
+
+build();
+</script>
+</body>
+</html>
