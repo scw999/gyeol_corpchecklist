@@ -3,301 +3,615 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>행정사 미팅 체크리스트 — 결하다</title>
+<title>결하다 · 매칭결제 프로세스 1·2 상세 비교</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: -apple-system, 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
-    background: #f5f4f0;
-    color: #1a1a1a;
-    padding: 2rem 1rem;
-    min-height: 100vh;
+  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');
+  :root{
+    --lav-deep:#5B4B8A; --lav:#8B7AB8; --lav-soft:#B8A9D9;
+    --sage:#84A98C; --sage-deep:#5E8268;
+    --ink:#241F33; --ink-soft:#6B6478; --ink-faint:#A39CB3;
+    --ok:#5E8268; --ok-bg:#EDF4EF; --ok-line:#CFE5D6;
+    --half:#C99A2E; --half-bg:#FDF6E3; --half-line:#F0E0B0;
+    --no:#C0392B; --no-bg:#FBEDEB; --no-line:#F0D4CF;
+    --man:#4A6FA5; --man-bg:#EDF2F9;
+    --woman:#B5638F; --woman-bg:#FBEFF5;
+    --warn:#C0392B; --warn-bg:#FBEDEB;
+    --safe:#5E8268; --safe-bg:#EDF4EF;
+    --paper:#F7F5FB; --card:#FFFFFF; --line:#E9E3F2;
   }
-  .container { max-width: 720px; margin: 0 auto; }
-  header { margin-bottom: 1.5rem; }
-  h1 { font-size: 18px; font-weight: 600; margin-bottom: 6px; }
-  .sub { font-size: 13px; color: #666; }
-  .meta { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
-  .badge {
-    font-size: 11px; padding: 3px 10px; border-radius: 20px; font-weight: 500;
-  }
-  .badge.w { background: #FEF3C7; color: #92400E; }
-  .badge.i { background: #DBEAFE; color: #1E40AF; }
-  .badge.s { background: #D1FAE5; color: #065F46; }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--paper);color:var(--ink);line-height:1.6;}
+  .wrap{max-width:1080px;margin:0 auto;padding:48px 28px 90px;}
 
-  .prog-row { display: flex; align-items: center; gap: 10px; margin-bottom: 1.5rem; }
-  .prog-track { flex: 1; height: 6px; background: #e0e0e0; border-radius: 3px; overflow: hidden; }
-  .prog-fill { height: 100%; background: #22c55e; border-radius: 3px; transition: width .3s; }
-  .prog-label { font-size: 12px; color: #888; white-space: nowrap; min-width: 70px; text-align: right; }
+  .doc-head{border-bottom:3px solid var(--lav-deep);padding-bottom:24px;}
+  .eyebrow{font-size:13px;font-weight:700;letter-spacing:.16em;color:var(--lav);text-transform:uppercase;}
+  h1{font-family:'Gowun Batang',serif;font-size:33px;font-weight:700;color:var(--lav-deep);margin-top:10px;letter-spacing:-.01em;}
+  .lead{font-size:16px;color:var(--ink-soft);margin-top:14px;max-width:720px;}
+  .toc{margin-top:24px;display:flex;gap:9px;flex-wrap:wrap;}
+  .toc a{font-size:12.5px;font-weight:700;padding:8px 14px;border-radius:20px;background:#fff;border:1px solid var(--line);color:var(--lav-deep);text-decoration:none;}
 
-  .section { background: #fff; border-radius: 12px; margin-bottom: 10px; overflow: hidden; border: 1px solid #e8e8e8; }
-  .sec-head {
-    display: flex; align-items: center; gap: 10px;
-    padding: 12px 16px; background: #fafafa;
-    cursor: pointer; user-select: none;
-    border-bottom: 1px solid #f0f0f0;
-  }
-  .sec-head:hover { background: #f3f3f3; }
-  .sec-dot {
-    width: 24px; height: 24px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 11px; font-weight: 600; flex-shrink: 0;
-  }
-  .sec-title { font-size: 13px; font-weight: 600; flex: 1; }
-  .sec-stat { font-size: 11px; color: #aaa; }
-  .arrow { font-size: 11px; color: #bbb; transition: transform .2s; }
-  .arrow.closed { transform: rotate(-90deg); }
+  .section{margin-top:58px;scroll-margin-top:20px;}
+  h2{font-size:24px;font-weight:800;display:flex;align-items:center;gap:12px;margin-bottom:8px;}
+  .sn{flex-shrink:0;width:34px;height:34px;border-radius:10px;background:var(--lav-deep);color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;}
+  .sec-desc{font-size:15px;color:var(--ink-soft);margin-bottom:26px;margin-left:46px;}
 
-  .item {
-    display: flex; align-items: flex-start; gap: 10px;
-    padding: 10px 16px; border-bottom: 1px solid #f5f5f5;
-    cursor: pointer; transition: background .1s;
-  }
-  .item:last-child { border-bottom: none; }
-  .item:hover { background: #fafafa; }
-  .box {
-    width: 16px; height: 16px; border: 1.5px solid #d0d0d0;
-    border-radius: 4px; flex-shrink: 0; margin-top: 2px;
-    transition: all .15s; position: relative;
-  }
-  .item.done .box { background: #22c55e; border-color: #22c55e; }
-  .item.done .box::after {
-    content: '';
-    position: absolute;
-    left: 2px; top: 5px;
-    width: 9px; height: 5px;
-    border-left: 2px solid #fff;
-    border-bottom: 2px solid #fff;
-    transform: rotate(-45deg) translateY(-2px);
-  }
-  .item.done .lbl { color: #bbb; text-decoration: line-through; }
-  .lbl { font-size: 13px; line-height: 1.55; flex: 1; }
-  .nt { font-size: 11px; color: #aaa; margin-top: 3px; line-height: 1.4; }
-  .tag {
-    display: inline-block; font-size: 10px;
-    padding: 1px 6px; border-radius: 10px;
-    margin-left: 5px; font-weight: 500; vertical-align: middle;
-  }
-  .tag.urg { background: #FEE2E2; color: #B91C1C; }
-  .tag.doc { background: #DBEAFE; color: #1D4ED8; }
-  .tag.ask { background: #FEF3C7; color: #B45309; }
+  /* 핵심 차이 - 트리거 */
+  .trigger-band{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:24px;}
+  @media(max-width:760px){.trigger-band{grid-template-columns:1fr;}}
+  .trig{border-radius:18px;padding:26px;background:var(--card);border:1px solid var(--line);}
+  .trig.t1{border-top:5px solid var(--warn);}
+  .trig.t2{border-top:5px solid var(--safe);}
+  .trig .tname{font-size:13px;font-weight:800;}
+  .t1 .tname{color:var(--warn);}
+  .t2 .tname{color:var(--safe);}
+  .trig .tbig{font-family:'Gowun Batang',serif;font-size:46px;font-weight:700;line-height:1.1;margin:8px 0 4px;}
+  .t1 .tbig{color:var(--warn);}
+  .t2 .tbig{color:var(--safe);}
+  .trig .tsub{font-size:14px;font-weight:700;color:var(--ink);}
+  .trig .tdesc{font-size:13px;color:var(--ink-soft);margin-top:10px;}
+  .trig-dots{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;}
+  .tdot{font-size:11.5px;font-weight:700;padding:6px 11px;border-radius:14px;}
+  .td-charge{background:var(--no-bg);color:var(--no);border:1px solid var(--no-line);}
+  .td-free{background:var(--ok-bg);color:var(--sage-deep);border:1px solid var(--ok-line);}
+  .td-pay{background:var(--half-bg);color:var(--half);border:1px solid var(--half-line);}
 
-  .legend { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 1.25rem; }
-  .leg-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: #888; }
-  .leg-dot { width: 8px; height: 8px; border-radius: 2px; }
+  /* 선우 비교 */
+  .sunwoo{margin-top:22px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:26px;}
+  .sunwoo h3{font-size:16px;font-weight:800;color:var(--lav-deep);margin-bottom:16px;}
+  .sw-rows{display:flex;flex-direction:column;gap:10px;}
+  .sw-row{display:grid;grid-template-columns:150px 1fr 110px;gap:14px;align-items:center;padding:13px 16px;border-radius:12px;}
+  @media(max-width:680px){.sw-row{grid-template-columns:1fr;gap:5px;}}
+  .sw-sunwoo{background:var(--no-bg);}
+  .sw-p1{background:var(--half-bg);}
+  .sw-p2{background:var(--ok-bg);}
+  .sw-name{font-size:14px;font-weight:800;}
+  .sw-desc{font-size:13px;color:var(--ink);}
+  .sw-result{font-size:12.5px;font-weight:800;text-align:center;padding:6px 8px;border-radius:9px;background:#fff;}
+  .swr-bad{color:var(--no);}
+  .swr-mid{color:var(--half);}
+  .swr-good{color:var(--safe);}
+
+  /* 등장인물 */
+  .cast{display:flex;gap:14px;margin-top:18px;flex-wrap:wrap;}
+  .cast-card{flex:1;min-width:240px;border-radius:16px;padding:16px 18px;display:flex;align-items:center;gap:13px;}
+  .cast-man{background:var(--man-bg);border:1px solid #D4E0EF;}
+  .cast-woman{background:var(--woman-bg);border:1px solid #EFD4E2;}
+  .cast-av{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:15px;flex-shrink:0;}
+  .av-m{background:linear-gradient(135deg,#5A82B8,#4A6FA5);}
+  .av-w{background:linear-gradient(135deg,#C77AA5,#B5638F);}
+  .cast-name{font-size:15px;font-weight:800;}
+  .cast-role{font-size:12px;color:var(--ink-soft);margin-top:1px;}
+
+  /* 상세 프로세스 (양쪽 타임라인) */
+  .proc-detail{margin-top:24px;background:var(--card);border:1px solid var(--line);border-radius:20px;overflow:hidden;}
+  .proc-detail.p1{border-top:5px solid var(--warn);}
+  .proc-detail.p2{border-top:5px solid var(--safe);}
+  .pd-head{padding:20px 26px;border-bottom:1px solid var(--line);}
+  .pd-head .ptag{font-size:12px;font-weight:800;padding:5px 12px;border-radius:14px;display:inline-block;margin-bottom:6px;}
+  .pt1{background:var(--warn-bg);color:var(--warn);}
+  .pt2{background:var(--safe-bg);color:var(--safe);}
+  .pd-head h3{font-size:18px;font-weight:800;}
+  .pd-head .psub{font-size:13px;color:var(--ink-soft);margin-top:2px;}
+  .pd-body{padding:24px 26px;}
+
+  .tl-grid{display:grid;grid-template-columns:1fr 120px 1fr;align-items:stretch;}
+  .tl-mid{display:flex;flex-direction:column;align-items:center;}
+  .tl-mark{width:36px;height:36px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff;background:var(--lav-soft);flex-shrink:0;}
+  .tl-mark.free{background:var(--sage);}
+  .tl-mark.pay{background:var(--half);}
+  .tl-mark.charge{background:var(--warn);}
+  .tl-mark.hold{background:#D4A437;}
+  .tl-line{flex:1;width:2px;background:var(--line);margin:2px 0;min-height:14px;}
+  .tl-stepname{font-size:10.5px;font-weight:700;color:var(--ink-soft);margin:5px 0 8px;text-align:center;line-height:1.3;}
+  .tl-side{padding:0 0 16px;}
+  .tl-side.l{padding-right:14px;}
+  .tl-side.r{padding-left:14px;}
+  .side-box{border-radius:12px;padding:11px 14px;font-size:13px;}
+  .box-man{background:var(--man-bg);}
+  .box-woman{background:var(--woman-bg);}
+  .side-who{font-size:10.5px;font-weight:800;margin-bottom:2px;}
+  .who-m{color:var(--man);}.who-w{color:var(--woman);}
+  .side-act{font-weight:600;color:var(--ink);font-size:13px;}
+  .side-pay{font-size:11.5px;font-weight:800;margin-top:3px;}
+  .pay-free{color:var(--sage-deep);}
+  .pay-charge{color:var(--warn);}
+  .pay-hold{color:#B8860B;}
+  .branch{margin-top:6px;padding:8px 11px;background:#fff;border:1px dashed var(--lav-soft);border-radius:9px;font-size:11.5px;color:var(--ink-soft);}
+  .branch b{color:var(--lav-deep);}
+
+  .insight{margin-top:14px;padding:15px 17px;border-radius:12px;font-size:13.5px;font-weight:600;line-height:1.55;}
+  .ins-warn{background:var(--half-bg);color:#8A6516;border:1px solid var(--half-line);}
+  .ins-good{background:var(--safe-bg);color:var(--safe);border:1px solid var(--ok-line);}
+
+  /* 비교표 */
+  .ctable{width:100%;border-collapse:collapse;margin-top:10px;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 8px 22px -14px rgba(91,75,138,.35);}
+  .ctable th{padding:15px 17px;text-align:left;font-size:13.5px;font-weight:700;}
+  .ctable thead th:first-child{background:#4A3D73;color:#fff;width:26%;}
+  .ctable thead th.c1{background:var(--warn);color:#fff;}
+  .ctable thead th.c2{background:var(--safe);color:#fff;}
+  .ctable td{padding:13px 17px;border-bottom:1px solid var(--line);font-size:13.5px;vertical-align:top;}
+  .ctable tr:last-child td{border-bottom:none;}
+  .ctable .rowlabel{font-weight:700;background:#FAF8FE;}
+  .ctable .c1cell{background:#FEF8F7;}
+  .ctable .c2cell{background:#F6FAF7;}
+  .mark-bad{color:var(--warn);font-weight:700;}
+  .mark-good{color:var(--safe);font-weight:700;}
+  .mark-mid{color:var(--half);font-weight:700;}
+
+  /* 진행순서 */
+  .roadmap{margin-top:24px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:28px;}
+  .rm-step{display:flex;gap:16px;padding:14px 0;}
+  .rm-num{flex-shrink:0;width:34px;height:34px;border-radius:10px;background:var(--lav-deep);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;}
+  .rm-body h4{font-size:15px;font-weight:800;}
+  .rm-body p{font-size:13px;color:var(--ink-soft);margin-top:2px;}
+  .rm-fork{margin-left:50px;display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px;margin-bottom:8px;}
+  @media(max-width:680px){.rm-fork{grid-template-columns:1fr;}}
+  .fork-box{border-radius:12px;padding:14px 16px;font-size:13px;}
+  .fork-ok{background:var(--ok-bg);border:1px solid var(--ok-line);}
+  .fork-no{background:var(--half-bg);border:1px solid var(--half-line);}
+  .fork-box b{display:block;margin-bottom:3px;font-size:13.5px;}
+  .fork-ok b{color:var(--safe);}
+  .fork-no b{color:var(--half);}
+
+  /* phone */
+  .ui-band{margin-top:26px;}
+  .ui-band h4{font-size:15px;font-weight:800;color:var(--lav-deep);margin-bottom:16px;}
+  .phones{display:flex;gap:18px;overflow-x:auto;padding-bottom:10px;}
+  .phone{flex-shrink:0;width:242px;background:#fff;border-radius:30px;box-shadow:0 20px 44px -16px rgba(91,75,138,.4),0 0 0 8px #15131f,0 0 0 9px #2c2a3a;overflow:hidden;}
+  .ph-status{padding:11px 18px 0;display:flex;justify-content:space-between;font-size:10px;font-weight:700;}
+  .ph-head{padding:11px 16px;border-bottom:1px solid var(--line);}
+  .ph-name{font-size:14px;font-weight:800;}
+  .ph-meta{font-size:10px;color:var(--ink-soft);}
+  .ph-tab{display:flex;font-size:11px;border-bottom:1px solid var(--line);}
+  .ph-tab span{flex:1;text-align:center;padding:9px 0;color:var(--ink-faint);font-weight:600;}
+  .ph-tab span.on{color:var(--lav-deep);font-weight:800;border-bottom:2px solid var(--lav-deep);}
+  .ph-body{padding:16px;min-height:330px;background:linear-gradient(180deg,#FBFAFD,#F5F2FB);}
+  .ph-cap{text-align:center;font-size:14px;font-weight:800;margin:6px 0 4px;}
+  .ph-sub{text-align:center;font-size:11px;color:var(--ink-soft);line-height:1.5;margin-bottom:14px;}
+  .cal{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin:8px 0;}
+  .cal div{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--ink-soft);border-radius:7px;}
+  .cal div.sel{background:var(--lav-deep);color:#fff;font-weight:800;}
+  .cal div.today{border:1.5px solid var(--lav);color:var(--lav-deep);font-weight:700;}
+  .timechips{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;}
+  .tchip{font-size:10px;font-weight:600;padding:5px 8px;border:1px solid var(--lav-soft);border-radius:10px;color:var(--lav-deep);}
+  .tchip.x{background:#F3EFFA;}
+  .alert-pop{background:#fff;border-radius:14px;padding:16px;box-shadow:0 8px 24px rgba(0,0,0,.12);border:1px solid var(--line);margin-top:8px;}
+  .alert-pop p{font-size:12px;line-height:1.5;}
+  .alert-pop .hl{color:var(--half);font-weight:800;}
+  .alert-btns{display:flex;gap:8px;margin-top:12px;}
+  .alert-btns button{flex:1;border:none;border-radius:9px;padding:9px;font-family:inherit;font-size:12px;font-weight:700;}
+  .ab-no{background:#EEE;color:var(--ink-soft);}.ab-yes{background:var(--lav-deep);color:#fff;}
+  .confirm-card{background:#fff;border:1px solid var(--line);border-radius:13px;padding:14px;text-align:center;margin-top:8px;}
+  .confirm-card .dday{font-size:15px;font-weight:800;color:var(--lav-deep);}
+  .confirm-card .place{font-size:12px;font-weight:700;margin-top:6px;}
+  .confirm-card .addr{font-size:10px;color:var(--ink-soft);margin-top:2px;}
+  .checkin-box{margin-top:10px;display:flex;gap:6px;}
+  .ci-item{flex:1;background:#F3EFFA;border-radius:9px;padding:8px 4px;text-align:center;}
+  .ci-item .cl{font-size:9px;color:var(--ink-soft);}
+  .ci-item .cv{font-size:12px;font-weight:800;color:var(--lav-deep);margin-top:2px;}
+  .pbtn{width:100%;border:none;border-radius:11px;padding:11px;font-family:inherit;font-size:13px;font-weight:800;color:#fff;margin-top:12px;}
+  .bt-primary{background:linear-gradient(135deg,#6E5BA6,#5B4B8A);}
+  .bt-gold{background:linear-gradient(135deg,#D4A437,#B8860B);}
+  .bt-wait{background:#C9C2DA;}
+  .bt-ghost{background:#fff;border:1.5px solid var(--lav-soft);color:var(--lav-deep);}
+  .passrow{margin-top:10px;padding:9px 12px;border-radius:10px;display:flex;justify-content:space-between;font-size:12px;}
+  .pr-hold{background:var(--half-bg);border:1px solid var(--half-line);}
+  .pr-done{background:var(--ok-bg);border:1px solid var(--ok-line);}
+  .pr-l{font-weight:600;color:var(--ink-soft);}.pr-v{font-weight:800;}
+  .v-hold{color:var(--half);}.v-done{color:var(--sage-deep);}
+
+  /* 환불표 */
+  .rtable{width:100%;border-collapse:collapse;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 8px 22px -14px rgba(91,75,138,.35);margin-top:8px;}
+  .rtable thead th{background:var(--lav-deep);color:#fff;padding:14px 17px;text-align:left;font-size:13.5px;}
+  .rtable thead th:nth-child(2){width:115px;text-align:center;}
+  .rtable td{padding:13px 17px;border-bottom:1px solid var(--line);}
+  .rtable tr:last-child td{border-bottom:none;}
+  .situation{font-weight:700;font-size:13.5px;}
+  .sit-sub{font-size:11.5px;color:var(--ink-soft);font-weight:500;margin-top:2px;}
+  .ratio{text-align:center;font-weight:800;font-size:13.5px;border-radius:9px;padding:7px 5px;}
+  .r-100{background:var(--ok-bg);color:var(--ok);}
+  .r-50{background:var(--half-bg);color:var(--half);}
+  .r-0{background:var(--no-bg);color:var(--no);}
+  .r-keep{background:#F3EFFA;color:var(--lav-deep);}
+  .reason{font-size:12px;color:var(--ink-soft);width:33%;}
+  .keybox{margin-top:22px;background:linear-gradient(135deg,#F3EFFA,#EDF4EF);border:1px solid var(--line);border-radius:16px;padding:22px;}
+  .keybox h3{font-size:15.5px;font-weight:800;color:var(--lav-deep);margin-bottom:7px;}
+  .keybox p{font-size:13.5px;margin-bottom:6px;}.keybox p:last-child{margin-bottom:0;}
+  .foot{margin-top:48px;padding:22px;background:var(--half-bg);border:1px solid var(--half-line);border-radius:14px;font-size:13.5px;color:#7A6320;line-height:1.6;}
+  .foot strong{color:#5A4810;}
 </style>
 </head>
 <body>
-<div class="container">
-  <header>
-    <h1>행정사 미팅 체크리스트</h1>
-    <div class="sub">결하다 법인 설립 · 사업자 등록 · 결혼중개업 면허 · 상표권 등록</div>
-  </header>
+<div class="wrap">
 
-  <div class="meta">
-    <span class="badge w">⚠ 2주 체류 데드라인</span>
-    <span class="badge i">마곡 공유오피스</span>
-    <span class="badge i">정헌 — 미국 영주권자 / 한국시민</span>
-    <span class="badge s">행정사 턴키 위임</span>
+  <div class="doc-head">
+    <div class="eyebrow">결하다 · 매칭결제 프로세스 상세 비교 (개선판)</div>
+    <h1>매칭결제 프로세스 1 vs 2 — 상세</h1>
+    <p class="lead">유저 경험은 거의 같습니다. 진짜 차이는 <strong>"차감 트리거가 몇 개냐"</strong> 하나이고, 이것이 선우 사례와의 구조적 동일성 여부 — 즉 영업정지 리스크 — 를 가릅니다. 두 프로세스의 모든 분기(재스케줄·거절·미응답 포함)와 화면, 환불, 현실적 진행 순서까지 담았습니다.</p>
+    <div class="toc">
+      <a href="#trigger">핵심 차이</a>
+      <a href="#sunwoo">선우 사례 비교</a>
+      <a href="#p1">프로세스 1 상세</a>
+      <a href="#p2">프로세스 2 상세</a>
+      <a href="#compare">비교표</a>
+      <a href="#roadmap">진행 순서</a>
+      <a href="#refund">환불</a>
+    </div>
   </div>
 
-  <div class="prog-row">
-    <div class="prog-track"><div class="prog-fill" id="pfill" style="width:0%"></div></div>
-    <div class="prog-label" id="plabel">0 / 0 완료</div>
+  <!-- 핵심 차이: 트리거 개수 -->
+  <div class="section" id="trigger">
+    <h2><span class="sn">1</span>핵심 차이는 단 하나 — 차감 트리거 개수</h2>
+    <p class="sec-desc">조율하고, 결제하고, 만나는 흐름은 둘 다 같습니다. 동시 결제가 아닌 것도 같습니다. 다른 건 "결패스가 빠지는 시점이 몇 군데냐"뿐입니다.</p>
+    <div class="trigger-band">
+      <div class="trig t1">
+        <div class="tname">프로세스 1 · 현행</div>
+        <div class="tbig">3곳</div>
+        <div class="tsub">차감 트리거가 단계마다 존재</div>
+        <div class="trig-dots">
+          <span class="tdot td-charge">① 스케줄 보낼 때</span>
+          <span class="tdot td-charge">② 수락할 때</span>
+          <span class="tdot td-charge">③ 재스케줄 보낼 때</span>
+        </div>
+        <div class="tdesc">행정청 눈에 "매칭 단계를 쪼개 수수료를 여러 번 받는 구조"로 보일 수 있음 → 선우 사례와 구조 유사</div>
+      </div>
+      <div class="trig t2">
+        <div class="tname">프로세스 2 · 권장</div>
+        <div class="tbig">1곳</div>
+        <div class="tsub">최종 확정 시에만 차감</div>
+        <div class="trig-dots">
+          <span class="tdot td-free">스케줄 주고받기 = 무료(보류)</span>
+          <span class="tdot td-pay">★ 최종 확정 시 1회</span>
+        </div>
+        <div class="tdesc">"매칭 1건 = 결패스 1회 사용"이 구조 자체로 명확 → "단계별 차감" 의심이 성립할 여지가 없음</div>
+      </div>
+    </div>
   </div>
 
-  <div class="legend">
-    <div class="leg-item"><div class="leg-dot" style="background:#FCA5A5"></div>필수 — 반드시 확인</div>
-    <div class="leg-item"><div class="leg-dot" style="background:#93C5FD"></div>서류 — 준비 필요</div>
-    <div class="leg-item"><div class="leg-dot" style="background:#FCD34D"></div>질문 — 행정사에게 확인</div>
+  <!-- 선우 비교 -->
+  <div class="section" id="sunwoo">
+    <h2><span class="sn">2</span>선우 사례와 구조 비교</h2>
+    <p class="sec-desc">선우는 단계별 결제 구조로 영업정지(26일+) 처분을 받은 실제 사례입니다. 세 구조를 나란히 놓으면 차이가 분명해집니다.</p>
+    <div class="sunwoo">
+      <h3>구조 비교 — 단계별 과금인가?</h3>
+      <div class="sw-rows">
+        <div class="sw-row sw-sunwoo">
+          <div class="sw-name">선우 사례</div>
+          <div class="sw-desc">단계마다 결제 + 환불 방어막 약함</div>
+          <div class="sw-result swr-bad">영업정지 26일+</div>
+        </div>
+        <div class="sw-row sw-p1">
+          <div class="sw-name">프로세스 1</div>
+          <div class="sw-desc">단계마다 차감(트리거 3곳) + <b>"못 만나면 100% 환불"</b> 방어막 → "선우와 다르다"고 주장하는 구조</div>
+          <div class="sw-result swr-mid">불확실<br><span style="font-weight:600;font-size:11px;">(행정청 판단)</span></div>
+        </div>
+        <div class="sw-row sw-p2">
+          <div class="sw-name">프로세스 2</div>
+          <div class="sw-desc">트리거 1곳 (매칭 1건당 1회) → 단계별 과금 의심 자체가 성립 안 함</div>
+          <div class="sw-result swr-good">구조적으로 안전</div>
+        </div>
+      </div>
+      <div class="insight ins-warn" style="margin-top:16px;">⚠ 솔직한 평가: 프로세스 1은 <strong>선우와 구조가 비슷</strong>합니다. "못 만나면 환불"이 차별화 포인트지만, 행정청이 "환불 여부와 무관하게 트리거가 여러 개인 것 자체가 문제"라고 보면 방어가 통하지 않습니다. 프로세스 2는 이 의심 자체를 구조적으로 제거합니다.</div>
+    </div>
   </div>
 
-  <div id="root"></div>
+  <!-- 등장인물 -->
+  <div class="cast">
+    <div class="cast-card cast-man">
+      <div class="cast-av av-m">민수</div>
+      <div><div class="cast-name">민수 (남)</div><div class="cast-role">"만나볼래요?"를 <strong>먼저 보낸 사람</strong></div></div>
+    </div>
+    <div class="cast-card cast-woman">
+      <div class="cast-av av-w">지은</div>
+      <div><div class="cast-name">지은 (여)</div><div class="cast-role">제안을 <strong>받은 사람</strong> → 스케줄을 먼저 보냄</div></div>
+    </div>
+  </div>
+
+  <!-- 프로세스 1 상세 -->
+  <div class="section" id="p1">
+    <h2><span class="sn">3</span>프로세스 1 상세 (현행 · 실제 앱)</h2>
+    <p class="sec-desc">받은 사람(지은)이 먼저 결제하고, 먼저 제안한 사람(민수)이 나중에 결제합니다. 재스케줄 분기까지 포함한 전체 흐름입니다.</p>
+    <div class="proc-detail p1">
+      <div class="pd-head"><span class="ptag pt1">프로세스 1 · 현행</span><h3>스케줄 보낼 때 차감 — 트리거 3곳</h3><div class="psub">차감되어도 "최종 만남 미성사 시 100% 환불"로 방어</div></div>
+      <div class="pd-body">
+        <div class="tl-grid">
+          <!-- 1 -->
+          <div class="tl-side l"><div class="side-box box-man"><div class="side-who who-m">민수 (남)</div><div class="side-act">"만나볼래요?" 전송</div><div class="side-pay pay-free">무료 · 의사 표현만</div></div></div>
+          <div class="tl-mid"><div class="tl-mark free">1</div><div class="tl-stepname">의사 전달</div><div class="tl-line"></div></div>
+          <div class="tl-side r"></div>
+          <!-- 2 -->
+          <div class="tl-side l"></div>
+          <div class="tl-mid"><div class="tl-mark free">2</div><div class="tl-stepname">의사 확인</div><div class="tl-line"></div></div>
+          <div class="tl-side r"><div class="side-box box-woman"><div class="side-who who-w">지은 (여)</div><div class="side-act">"만나볼래요?" 수락 → 서로 확인</div><div class="side-pay pay-free">무료</div></div></div>
+          <!-- 3 -->
+          <div class="tl-side l"></div>
+          <div class="tl-mid"><div class="tl-mark charge">3</div><div class="tl-stepname">스케줄 발송<br>★차감 1</div><div class="tl-line"></div></div>
+          <div class="tl-side r"><div class="side-box box-woman"><div class="side-who who-w">지은 (여) — 먼저 결제 ★</div><div class="side-act">날짜(2주 내)·시간(최소 6개) 선택 → 스케줄 보내기</div><div class="side-pay pay-charge">★ 결패스 10개 차감</div><div class="branch">팝업 고지: <b>"최종 만남이 이루어지지 못하면 환불됩니다"</b></div></div></div>
+          <!-- 4 -->
+          <div class="tl-side l"><div class="side-box box-man"><div class="side-who who-m">민수 (남) — 나중 결제 ★</div><div class="side-act">받은 스케줄 중 선택해 수락</div><div class="side-pay pay-charge">★ 결패스 10개 차감</div><div class="branch">분기: 일정이 안 맞으면 <b>재스케줄 발송</b> — 이때도 차감 트리거(★차감 3) 발동. 양쪽 거절 시 제안자 결패스 환급</div></div></div>
+          <div class="tl-mid"><div class="tl-mark charge">4</div><div class="tl-stepname">수락/재스케줄<br>★차감 2·3</div><div class="tl-line"></div></div>
+          <div class="tl-side r"></div>
+          <!-- 5 -->
+          <div class="tl-side l"></div>
+          <div class="tl-mid"><div class="tl-mark pay">5</div><div class="tl-stepname">만남 확정</div><div class="tl-line"></div></div>
+          <div class="tl-side r"><div class="side-box box-woman"><div class="side-who who-w">공통</div><div class="side-act">날짜·장소 확정, 안심번호 3시간 전 공개</div><div class="side-pay pay-free">취소·재조율 가능 (환불표 적용)</div></div></div>
+          <!-- 6 -->
+          <div class="tl-side l"><div class="side-box box-man"><div class="side-who who-m">공통</div><div class="side-act">체크인 (지오펜스, 약속 20분 전~후)</div><div class="side-pay pay-free">상의·하의 색상, 자리 위치 입력</div></div></div>
+          <div class="tl-mid"><div class="tl-mark free">6</div><div class="tl-stepname">체크인</div><div class="tl-line"></div></div>
+          <div class="tl-side r"></div>
+          <!-- 7 -->
+          <div class="tl-side l"></div>
+          <div class="tl-mid"><div class="tl-mark free">7</div><div class="tl-stepname">만남 완료</div></div>
+          <div class="tl-side r"><div class="side-box box-woman"><div class="side-who who-w">공통</div><div class="side-act">양쪽 체크인 완료 → 만남</div><div class="side-pay pay-free">미체크인 = 노쇼 (환불표 적용)</div></div></div>
+        </div>
+        <div class="insight ins-warn">⚠ 포인트: 먼저 "만나볼래요?" 한 민수가 정작 <strong>나중에</strong> 결제합니다. 차감 트리거가 ①스케줄 발송 ②수락 ③재스케줄 — <strong>3곳</strong>이라 "단계별 차감"으로 보일 여지가 있고, 이를 "못 만나면 환불"로 방어하는 구조입니다.</div>
+      </div>
+    </div>
+
+    <div class="ui-band">
+      <h4>📱 프로세스 1 실제 화면</h4>
+      <div class="phones">
+        <div class="phone">
+          <div class="ph-status"><span>5:23</span><span>● ●● 88</span></div>
+          <div class="ph-head"><div class="ph-name">곰돌</div><div class="ph-meta">35세, 강동구, 변리사</div></div>
+          <div class="ph-tab"><span class="on">만남 진행 상태</span><span>프로필 정보</span></div>
+          <div class="ph-body">
+            <div class="ph-cap">만남의 의사를 전달하였습니다</div>
+            <div class="ph-sub">상대방의 만남 의사 표현을 기다려주세요. 서로 표현하면 일정 조율 단계로 넘어가요</div>
+            <button class="pbtn bt-wait">상대 의사 대기 중…</button>
+            <p class="ph-sub" style="margin-top:10px;">1단계 · 무료</p>
+          </div>
+        </div>
+        <div class="phone">
+          <div class="ph-status"><span>9:24</span><span>● ●● 50</span></div>
+          <div class="ph-head"><div class="ph-name">날짜·시간 선택</div><div class="ph-meta">조율중 · 지은 화면</div></div>
+          <div class="ph-body">
+            <div class="ph-sub" style="text-align:left;margin-bottom:6px;"><b>1. 날짜</b> (매칭일 기준 2주 이내)</div>
+            <div class="cal">
+              <div>일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div>토</div>
+              <div>10</div><div>11</div><div>12</div><div class="today">13</div><div class="sel">14</div><div>15</div><div>16</div>
+              <div>17</div><div>18</div><div>19</div><div class="today">20</div><div class="sel">21</div><div>22</div><div>23</div>
+            </div>
+            <div class="ph-sub" style="text-align:left;margin:6px 0 4px;"><b>2. 시간</b> (최소 6개, 하루 최대 2개)</div>
+            <div class="timechips">
+              <span class="tchip x">14일 18시</span><span class="tchip x">14일 19시</span>
+              <span class="tchip x">20일 18시</span><span class="tchip x">21일 18시</span>
+            </div>
+            <button class="pbtn bt-primary">스케줄 보내기 (6개)</button>
+          </div>
+        </div>
+        <div class="phone">
+          <div class="ph-status"><span>9:25</span><span>● ●● 51</span></div>
+          <div class="ph-head"><div class="ph-name">결제 확인</div><div class="ph-meta">★ 차감 시점</div></div>
+          <div class="ph-body" style="display:flex;flex-direction:column;justify-content:center;">
+            <div class="alert-pop">
+              <p>더 진행하시려면 <span class="hl">결패스 10개</span>가 필요합니다. 만약 최종 만남이 이루어지지 못하면 <span class="hl">환불</span>됩니다. 계속하시겠습니까?</p>
+              <div class="alert-btns"><button class="ab-no">취소</button><button class="ab-yes">확인</button></div>
+            </div>
+            <p class="ph-sub" style="margin-top:14px;">★ 스케줄 보내기 = 차감 (트리거 1)<br>이 문구가 법적 방어의 핵심</p>
+          </div>
+        </div>
+        <div class="phone">
+          <div class="ph-status"><span>9:24</span><span>● ●● 52</span></div>
+          <div class="ph-head"><div class="ph-name">토끼</div><div class="ph-meta">33세, 강서구, 은행원</div></div>
+          <div class="ph-body">
+            <div class="ph-cap">두 분의 만남이 확정되었습니다</div>
+            <div class="confirm-card">
+              <div class="dday">4월 29일 (수) 17:00</div>
+              <div class="place">📍 폴바셋 광화문점</div>
+              <div class="addr">서울 종로구 종로3길 17</div>
+            </div>
+            <div class="ph-sub" style="margin-top:10px;">안심번호는 만남 3시간 전 공개<br>만남 취소·일정 재조율 가능</div>
+            <button class="pbtn bt-ghost">체크인 하기</button>
+          </div>
+        </div>
+        <div class="phone">
+          <div class="ph-status"><span>9:28</span><span>● ●● 55</span></div>
+          <div class="ph-head"><div class="ph-name">김파랑</div><div class="ph-meta">34세, 영등포구</div></div>
+          <div class="ph-body">
+            <div class="ph-cap">두 분 다 체크인 완료</div>
+            <div class="ph-sub" style="text-align:left;font-weight:700;color:var(--ink);">내 체크인 정보</div>
+            <div class="checkin-box">
+              <div class="ci-item"><div class="cl">상의</div><div class="cv">파랑</div></div>
+              <div class="ci-item"><div class="cl">하의</div><div class="cv">검정</div></div>
+              <div class="ci-item"><div class="cl">자리</div><div class="cv">창가</div></div>
+            </div>
+            <div class="ph-sub" style="text-align:left;font-weight:700;color:var(--ink);margin-top:10px;">상대방 체크인 정보</div>
+            <div class="checkin-box">
+              <div class="ci-item"><div class="cl">상의</div><div class="cv">빨강</div></div>
+              <div class="ci-item"><div class="cl">하의</div><div class="cv">흰색</div></div>
+              <div class="ci-item"><div class="cl">자리</div><div class="cv">안쪽</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 프로세스 2 상세 -->
+  <div class="section" id="p2">
+    <h2><span class="sn">4</span>프로세스 2 상세 (권장)</h2>
+    <p class="sec-desc">스케줄 주고받기는 무료입니다. 먼저 확정한 사람은 "보류(hold)"만 걸리고, 양쪽이 확정하면 그때 동시 차감됩니다. 체크인 이후는 프로세스 1과 완전히 동일합니다.</p>
+    <div class="proc-detail p2">
+      <div class="pd-head"><span class="ptag pt2">프로세스 2 · 권장</span><h3>최종 확정 시 1회 차감 — 트리거 1곳</h3><div class="psub">보류(hold)로 "동시 결제 아님" 문제 해결: 무산 시 보류만 풀려 손해 보는 사람 없음</div></div>
+      <div class="pd-body">
+        <div class="tl-grid">
+          <!-- 1 -->
+          <div class="tl-side l"><div class="side-box box-man"><div class="side-who who-m">민수 (남)</div><div class="side-act">"만나볼래요?" 전송</div><div class="side-pay pay-free">무료</div></div></div>
+          <div class="tl-mid"><div class="tl-mark free">1</div><div class="tl-stepname">의사 전달</div><div class="tl-line"></div></div>
+          <div class="tl-side r"></div>
+          <!-- 2 -->
+          <div class="tl-side l"></div>
+          <div class="tl-mid"><div class="tl-mark free">2</div><div class="tl-stepname">의사 확인</div><div class="tl-line"></div></div>
+          <div class="tl-side r"><div class="side-box box-woman"><div class="side-who who-w">지은 (여)</div><div class="side-act">"만나볼래요?" 수락</div><div class="side-pay pay-free">무료</div></div></div>
+          <!-- 3 -->
+          <div class="tl-side l"><div class="side-box box-man"><div class="side-who who-m">민수 (남)</div><div class="side-act">스케줄 수락/역제안 자유롭게</div><div class="side-pay pay-free">무료 · 차감 없음</div></div></div>
+          <div class="tl-mid"><div class="tl-mark free">3</div><div class="tl-stepname">일정 조율<br>(무료)</div><div class="tl-line"></div></div>
+          <div class="tl-side r"><div class="side-box box-woman"><div class="side-who who-w">지은 (여)</div><div class="side-act">날짜·시간 골라 스케줄 발송</div><div class="side-pay pay-free">무료 · 차감 없음</div><div class="branch">프로세스 1과 같은 화면이지만 <b>결제 팝업이 없음</b>. 재스케줄도 무료</div></div></div>
+          <!-- 4a 보류 -->
+          <div class="tl-side l"></div>
+          <div class="tl-mid"><div class="tl-mark hold">4a</div><div class="tl-stepname">먼저 확정<br>= 보류</div><div class="tl-line"></div></div>
+          <div class="tl-side r"><div class="side-box box-woman"><div class="side-who who-w">지은 (여) — 먼저 확정</div><div class="side-act">"이 일정으로 확정" 누름</div><div class="side-pay pay-hold">결패스 10개 보류(hold) — 아직 차감 아님</div><div class="branch">유효시간 <b>48시간</b>. 민수가 미응답·거절하면 <b>보류 자동 해제, 차감 없음</b></div></div></div>
+          <!-- 4b 동시 차감 -->
+          <div class="tl-side l"><div class="side-box box-man"><div class="side-who who-m">민수 (남) — 확정 합류</div><div class="side-act">"만남 확정" 누름 (48h 내)</div><div class="side-pay pay-charge">★ 이 순간 민수·지은 동시 차감 (각 10개)</div></div></div>
+          <div class="tl-mid"><div class="tl-mark pay">4b</div><div class="tl-stepname">양쪽 확정<br>★유일한 차감</div><div class="tl-line"></div></div>
+          <div class="tl-side r"></div>
+          <!-- 5 -->
+          <div class="tl-side l"></div>
+          <div class="tl-mid"><div class="tl-mark pay">5</div><div class="tl-stepname">만남 확정</div><div class="tl-line"></div></div>
+          <div class="tl-side r"><div class="side-box box-woman"><div class="side-who who-w">공통</div><div class="side-act">날짜·장소·안심번호 (프로세스 1과 동일)</div><div class="side-pay pay-free">취소·재조율 가능 (환불표 적용)</div></div></div>
+          <!-- 6 -->
+          <div class="tl-side l"><div class="side-box box-man"><div class="side-who who-m">공통</div><div class="side-act">체크인 → 양쪽 완료 → 만남</div><div class="side-pay pay-free">프로세스 1과 완전 동일</div></div></div>
+          <div class="tl-mid"><div class="tl-mark free">6·7</div><div class="tl-stepname">체크인·만남</div></div>
+          <div class="tl-side r"></div>
+        </div>
+        <div class="insight ins-good">✓ 포인트: 누가 먼저 확정해도 <strong>보류(hold)</strong>만 걸리고, 양쪽이 다 확정하는 순간 <strong>동시에 차감</strong>됩니다. 차감 트리거가 이 한 곳뿐이라 "단계별 차감" 의심이 구조적으로 성립하지 않고, 무산되면 보류만 풀려 한쪽만 손해 보는 일도 없습니다.</div>
+      </div>
+    </div>
+
+    <div class="ui-band">
+      <h4>📱 프로세스 2 핵심 화면 (바뀌는 3~4단계만 · 나머지는 프로세스 1과 동일)</h4>
+      <div class="phones">
+        <div class="phone">
+          <div class="ph-status"><span>9:24</span><span>● ●● 50</span></div>
+          <div class="ph-head"><div class="ph-name">일정 조율</div><div class="ph-meta">3단계 · 지은 화면</div></div>
+          <div class="ph-body">
+            <div class="ph-sub" style="text-align:left;margin-bottom:6px;"><b>일정 조율</b> (무료 · 차감 없음)</div>
+            <div class="timechips">
+              <span class="tchip x">14일 18시</span><span class="tchip x">14일 19시</span>
+              <span class="tchip x">20일 18시</span><span class="tchip x">21일 18시</span>
+            </div>
+            <div class="passrow pr-hold" style="margin-top:14px;"><span class="pr-l">내 결패스</span><span class="pr-v v-hold">차감 없음</span></div>
+            <button class="pbtn bt-ghost">스케줄 보내기 (무료)</button>
+            <p class="ph-sub" style="margin-top:10px;">결제 팝업 없음. 재스케줄도 무료</p>
+          </div>
+        </div>
+        <div class="phone">
+          <div class="ph-status"><span>9:25</span><span>● ●● 51</span></div>
+          <div class="ph-head"><div class="ph-name">먼저 확정 (보류)</div><div class="ph-meta">4a단계 · 지은 화면</div></div>
+          <div class="ph-body">
+            <div class="ph-cap" style="font-size:13px;">확정 요청을 보냈어요</div>
+            <div class="confirm-card">
+              <div class="dday">5월 14일 (목) 19:00</div>
+              <div class="place">📍 강남</div>
+            </div>
+            <div class="passrow pr-hold" style="margin-top:10px;"><span class="pr-l">내 결패스</span><span class="pr-v v-hold">10개 보류 중</span></div>
+            <button class="pbtn bt-wait">민수님의 확정을 기다리는 중…</button>
+            <p class="ph-sub" style="margin-top:10px;">아직 차감 안 됨<br>48시간 내 미확정 시 보류 자동 해제</p>
+          </div>
+        </div>
+        <div class="phone">
+          <div class="ph-status"><span>9:26</span><span>● ●● 52</span></div>
+          <div class="ph-head"><div class="ph-name">확정 합류</div><div class="ph-meta">4b단계 · 민수 화면</div></div>
+          <div class="ph-body">
+            <div class="ph-cap" style="font-size:13px;">지은님이 만남을 확정하려 해요</div>
+            <div class="confirm-card">
+              <div class="dday">5월 14일 (목) 19:00</div>
+              <div class="place">📍 강남</div>
+            </div>
+            <div class="passrow pr-hold" style="margin-top:10px;"><span class="pr-l">사용 결패스</span><span class="pr-v v-hold">확정 시 10개</span></div>
+            <button class="pbtn bt-gold">✓ 만남 확정 (10개 사용)</button>
+            <p class="ph-sub" style="margin-top:10px;">확정하면 양쪽 동시 차감 ★유일한 차감 시점</p>
+          </div>
+        </div>
+        <div class="phone">
+          <div class="ph-status"><span>9:26</span><span>● ●● 55</span></div>
+          <div class="ph-head"><div class="ph-name">만남 확정</div><div class="ph-meta">5단계 · 공통</div></div>
+          <div class="ph-body">
+            <div class="ph-cap">두 분의 만남이 확정되었습니다</div>
+            <div class="confirm-card">
+              <div class="dday">5월 14일 (목) 19:00</div>
+              <div class="place">📍 강남</div>
+            </div>
+            <div class="passrow pr-done" style="margin-top:10px;"><span class="pr-l">결패스 사용</span><span class="pr-v v-done">10개 사용 완료</span></div>
+            <button class="pbtn bt-primary">체크인 하기</button>
+            <p class="ph-sub" style="margin-top:10px;">이후 안심번호·체크인은 프로세스 1과 동일</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 비교표 -->
+  <div class="section" id="compare">
+    <h2><span class="sn">5</span>비교표</h2>
+    <p class="sec-desc">총액은 동일(각 결패스 10개)합니다. 다른 것은 트리거 개수와 그에 따른 법적 위험·개발 범위입니다.</p>
+    <table class="ctable">
+      <thead><tr><th>항목</th><th class="c1">프로세스 1 · 현행</th><th class="c2">프로세스 2 · 권장</th></tr></thead>
+      <tbody>
+        <tr><td class="rowlabel">차감 트리거</td><td class="c1cell"><span class="mark-bad">3곳</span> (스케줄 발송·수락·재스케줄)</td><td class="c2cell"><span class="mark-good">1곳</span> (최종 확정 시)</td></tr>
+        <tr><td class="rowlabel">결제 순서</td><td class="c1cell">받은 사람(지은) 먼저 → 제안자(민수) 나중</td><td class="c2cell">보류(hold) 후 양쪽 동시 차감</td></tr>
+        <tr><td class="rowlabel">무산 시 처리</td><td class="c1cell">차감 후 환불 (환불 처리 발생)</td><td class="c2cell">보류 해제 (차감 자체가 없음)</td></tr>
+        <tr><td class="rowlabel">선우 사례와 구조</td><td class="c1cell"><span class="mark-bad">유사</span> — "환불 방어막"으로 차별화 주장</td><td class="c2cell"><span class="mark-good">다름</span> — 의심 자체가 성립 안 함</td></tr>
+        <tr><td class="rowlabel">법적 위험</td><td class="c1cell"><span class="mark-mid">불확실</span> (행정청 판단에 달림)</td><td class="c2cell"><span class="mark-good">낮음</span></td></tr>
+        <tr><td class="rowlabel">유저 경험</td><td class="c1cell" colspan="2" style="text-align:center;background:#FAF8FE;">거의 동일 (조율 → 결제 → 만남, 총액 같음)</td></tr>
+        <tr><td class="rowlabel">개발</td><td class="c1cell">변경 없음</td><td class="c2cell">1~2주 (차감 트리거 이동 + 보류 상태)</td></tr>
+        <tr><td class="rowlabel">환불 운영</td><td class="c1cell">무산 케이스마다 환불 처리 필요</td><td class="c2cell">무산 시 환불 처리 자체가 줄어듦</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 진행 순서 -->
+  <div class="section" id="roadmap">
+    <h2><span class="sn">6</span>현실적 진행 순서 — 사전심사 결과로 분기</h2>
+    <p class="sec-desc">어느 쪽이든 약관 정비와 여가부 사전심사는 필요합니다. 그래서 사전심사를 먼저 받고, 결과에 따라 개발 여부를 정하면 불필요한 도박과 불필요한 개발을 모두 피할 수 있습니다.</p>
+    <div class="roadmap">
+      <div class="rm-step">
+        <div class="rm-num">1</div>
+        <div class="rm-body"><h4>약관·계약서 정비 (공통 필수)</h4><p>결패스 정의(만남 1건용 선불 사용권) + 환불표 + 충전·영수증 절차를 약관에 명문화. 어느 프로세스로 가든 필요한 작업.</p></div>
+      </div>
+      <div class="rm-step">
+        <div class="rm-num">2</div>
+        <div class="rm-body"><h4>변호사 검토 + 여가부 사전심사 신청</h4><p>현행(프로세스 1) 구조로 "단계별 수수료에 해당하는지" 사전 질의. 변호사 의견서 첨부.</p></div>
+      </div>
+      <div class="rm-step">
+        <div class="rm-num">3</div>
+        <div class="rm-body"><h4>회신 결과에 따라 분기</h4></div>
+      </div>
+      <div class="rm-fork">
+        <div class="fork-box fork-ok"><b>✓ "적법" 회신</b>프로세스 1 유지. 개발 0으로 출시. 회신 문서를 보관해 향후 분쟁 시 방어 자료로 활용.</div>
+        <div class="fork-box fork-no"><b>⚠ "단계별 차감 문제" 회신</b>프로세스 2로 개발 전환 (1~2주). 트리거를 최종 확정 1곳으로 이동 + 보류(hold) 로직 추가.</div>
+      </div>
+      <div class="rm-step">
+        <div class="rm-num">4</div>
+        <div class="rm-body"><h4>화면 문구 약관과 일치 → 출시</h4><p>결제 팝업·충전 화면 고지를 확정된 약관과 1:1로 맞추고 출시.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 환불 -->
+  <div class="section" id="refund">
+    <h2><span class="sn">7</span>환불 기준 (프로세스 1·2 공통)</h2>
+    <p class="sec-desc">"못 만남"은 100%, "확정 후 본인 변심"은 50%, "본인 노쇼"는 0%가 원칙입니다.</p>
+    <table class="rtable">
+      <thead><tr><th>상황</th><th>환불</th><th>근거</th></tr></thead>
+      <tbody>
+        <tr><td><div class="situation">스케줄/확정요청 후 ~ 상대 수락 전</div><div class="sit-sub">P1: 차감 후 대기 / P2: 보류 중</div></td><td><div class="ratio r-100">100%<br><span style="font-size:10px;">(P2는 보류해제)</span></div></td><td class="reason">매칭 서비스 미진행</td></tr>
+        <tr><td><div class="situation">최종 만남 무산</div><div class="sit-sub">일정 안 맞아 못 만남</div></td><td><div class="ratio r-100">100%</div></td><td class="reason">앱 고지 "미성사 시 환불"</td></tr>
+        <tr><td><div class="situation">상대방 노쇼·연락두절·일방취소</div><div class="sit-sub">내 잘못 아닌 무산</div></td><td><div class="ratio r-100">100%</div></td><td class="reason">상대 귀책 — 본인 보호</td></tr>
+        <tr><td><div class="situation">상대방 거짓정보 발각</div><div class="sit-sub">강제탈퇴 사유</div></td><td><div class="ratio r-100">100%</div></td><td class="reason">상대 귀책 + 손해배상</td></tr>
+        <tr><td><div class="situation">회사 귀책 (오류·매칭 실수)</div><div class="sit-sub">회사 잘못</div></td><td><div class="ratio r-100" style="font-size:12px;">100%+보상</div></td><td class="reason">결패스 추가 보상</td></tr>
+        <tr><td><div class="situation">일정 확정 후 본인 취소</div><div class="sit-sub">단순 변심</div></td><td><div class="ratio r-50">50%</div></td><td class="reason">조율·매니징 비용 + 유저 보호 절충</td></tr>
+        <tr><td><div class="situation">일정 재조율로 성사</div><div class="sit-sub">날짜만 변경</div></td><td><div class="ratio r-keep">유지</div></td><td class="reason">환불 없이 일정 변경</td></tr>
+        <tr><td><div class="situation">본인 노쇼 (체크인 안 함)</div><div class="sit-sub">약속 불참</div></td><td><div class="ratio r-0">0%</div></td><td class="reason">본인 귀책 (상대는 100%)</td></tr>
+        <tr><td><div class="situation">묶음권 일부 사용 후 해지</div><div class="sit-sub">N회권 일부 사용</div></td><td><div class="ratio r-100" style="font-size:12px;">미사용분</div></td><td class="reason">총액−(사용×정상가)−위약금</td></tr>
+      </tbody>
+    </table>
+    <div class="keybox">
+      <h3>환불 3원칙</h3>
+      <p><strong>① 못 만나면 100%.</strong> 앱 고지("최종 만남 미성사 시 환불")를 약관에 그대로 명문화 — 프로세스 1의 법적 방어 핵심.</p>
+      <p><strong>② 확정 후 본인 변심은 50%.</strong> 확정 후 취소엔 회사 조율·매니징 비용 발생 → 100% 몰취(과도)와 100% 환불(회사 손실) 사이 절충.</p>
+      <p><strong>③ 상대 잘못은 보호, 본인 노쇼는 불가.</strong> 상대 귀책 시 본인 100%, 본인 노쇼는 0%로 노쇼 억제.</p>
+    </div>
+  </div>
+
+  <div class="foot">
+    <strong>⚠ 출시 전 필수 확인.</strong> 프로세스 1의 "스케줄 단계마다 차감" 적법성, "확정 후 본인 취소 50%"·"본인 노쇼 0%"의 「소비자분쟁해결기준」 충돌 여부는 결혼중개업 전문 변호사 검토 및 여성가족부 법령적용 사전심사(또는 민원회신)로 사전 의견을 확보해야 합니다. 본 문서의 권장 진행 순서(섹션 6)대로 <strong>사전심사를 출시 전에 먼저</strong> 진행하면, 부정적 회신 시 프로세스 2로 전환할 시간을 확보할 수 있습니다.
+  </div>
+
 </div>
-
-<script>
-const sections = [
-  {
-    id:'A', title:'일정 & 위임 범위 확정',
-    color:'#534AB7', bg:'#EEEDFE',
-    items:[
-      {l:'2주 체류 기간 내 완료 가능한 절차 목록 확인', n:'정헌 본인 대면 필수 항목 vs. 대리 가능 항목 분리', t:['urg']},
-      {l:'행정사 직접 처리 범위 vs. 법무사·상표사무소 연계 역할 분담 명시', t:['ask']},
-      {l:'법인설립 → 사업자등록 → 결혼중개업 면허 → 상표권 순서 및 병렬 가능 여부', t:['ask']},
-      {l:'각 단계별 예상 기간 및 총 비용 견적 (행정사 수임료 포함)', t:['ask']},
-      {l:'정헌 출국 후 잔여 절차 대리 진행 방법', t:['ask']},
-    ]
-  },
-  {
-    id:'B', title:'법인 설립 — 주식회사',
-    color:'#185FA5', bg:'#E6F1FB',
-    items:[
-      {l:'발기인 구성 — 창완·정헌 지분율 및 대표이사 설정', t:['ask']},
-      {l:'정관 작성 — 목적 사업에 결혼중개업 명시 필요', n:'사업자등록 전 필수 선행', t:['doc']},
-      {l:'자본금 납입 계좌 개설 및 잔고증명 발급', n:'결혼중개업 법적 최소 자본금 요건 확인', t:['urg','doc']},
-      {l:'법인 인감 제작 및 인감 등록 (설립 후 즉시)', t:['doc']},
-      {l:'등기 완료까지 소요 기간 확인', n:'법원 접수 기준 통상 7~10영업일', t:['ask']},
-      {l:'정헌 영주권자 — 외국인 주주·임원 등기 시 추가 서류 여부', n:'여권 사본 + 인감증명서 또는 서명공증 필요 여부', t:['urg','ask']},
-    ]
-  },
-  {
-    id:'C', title:'사업자 등록',
-    color:'#0F6E56', bg:'#E1F5EE',
-    items:[
-      {l:'법인 등기 완료 후 세무서 사업자등록 신청', n:'법인등기부등본 발급 후 진행', t:['doc']},
-      {l:'업종 코드 확인 — 결혼상담업(75992) 포함 여부', t:['ask']},
-      {l:'마곡 공유오피스 주소 사업자등록 사용 가능 여부', n:'임대차계약서 또는 사용승낙서 필요', t:['urg','doc']},
-      {l:'공유오피스 측 사업자등록용 사용승낙서 발급 여부 사전 확인', t:['urg']},
-      {l:'사업자등록증 발급 기간 (신청 후 통상 1~3일)', t:['ask']},
-    ]
-  },
-  {
-    id:'D', title:'결혼중개업 면허 등록',
-    color:'#BA7517', bg:'#FAEEDA',
-    items:[
-      {l:'신고 관할 — 강서구청 담당 부서 및 담당자 확인', t:['ask']},
-      {l:'사무실 전용면적 요건 확인 — 공유오피스 1인실·2인실 충족 여부', n:'불충족 시 전용 사무실 계약 필요 → 전체 일정의 변수', t:['urg']},
-      {l:'신고 필요 서류 — 법인등기부등본, 사업자등록증, 임대차계약서, 대표이사 신분증', t:['doc']},
-      {l:'결혼중개업법상 교육 이수 요건 (대표자 또는 종사자)', t:['ask']},
-      {l:'국내 결혼중개업 vs. 국제결혼중개업 등록 유형 확인', n:'국제결혼은 별도 등록 + 보증보험 요건 있음', t:['ask']},
-      {l:'신고증 발급 기간', t:['ask']},
-    ]
-  },
-  {
-    id:'E', title:'상표권 등록',
-    color:'#993C1D', bg:'#FAECE7',
-    items:[
-      {l:'"결하다" 유사 상표 사전 검색 결과 공유', n:'키프리스(KIPRIS) 검색 스크린샷 미팅 전 준비', t:['urg']},
-      {l:'상표 출원 대리 — 행정사 직접 or 변리사 연계 여부', t:['ask']},
-      {l:'출원 분류 — 45류(결혼중개업) + 42류(앱/SW) 동시 출원 권고', t:['ask']},
-      {l:'출원 후 심사 기간 및 조기심사 신청 가능 여부', n:'통상 6~12개월, 조기심사 시 2~3개월 단축 가능', t:['ask']},
-      {l:'관납료 + 대리인 비용 견적', t:['ask']},
-    ]
-  },
-  {
-    id:'F', title:'정헌 — 영주권자 특이사항',
-    color:'#993556', bg:'#FBEAF0',
-    items:[
-      {l:'주민등록 말소 여부 확인 — 인감증명서 발급 가능한지', n:'말소 시 재외국민 서명공증(공증사무소)으로 대체', t:['urg','doc']},
-      {l:'정헌 입국 중 필수 처리 항목 vs. 사전 서류 발송 가능 항목 분리', t:['urg']},
-      {l:'법인 통장 개설 — 정헌 대면 필요 여부 (은행별 상이)', n:'대표이사 방문 필수인 은행 사전 확인', t:['ask']},
-      {l:'출국 후 원격 운영 — 위임장·전자서명 방법 확인', t:['ask']},
-    ]
-  },
-  {
-    id:'G', title:'공유오피스 (마곡) 관련',
-    color:'#3B6D11', bg:'#EAF3DE',
-    items:[
-      {l:'1인실 vs. 2인실 선택 전 결혼중개업 면적 요건 충족 여부 확인', n:'면적 기준 미달 시 계약 전 재검토 필요', t:['urg']},
-      {l:'사업자등록용 사용승낙서 발급 가능 여부 공유오피스 측 확인', t:['urg','doc']},
-      {l:'임대차계약서 법인 명의 체결 가능 시점', n:'법인 설립 완료 후 법인 명의로 계약 필요', t:['ask']},
-      {l:'구청 결혼중개업 신고 시 공유오피스 주소 수리 전례 행정사에게 확인', t:['ask']},
-    ]
-  },
-];
-
-function build() {
-  const root = document.getElementById('root');
-  sections.forEach(sec => {
-    const wrap = document.createElement('div');
-    wrap.className = 'section';
-
-    const head = document.createElement('div');
-    head.className = 'sec-head';
-
-    const dot = document.createElement('div');
-    dot.className = 'sec-dot';
-    dot.style.cssText = `background:${sec.bg};color:${sec.color}`;
-    dot.textContent = sec.id;
-
-    const title = document.createElement('div');
-    title.className = 'sec-title';
-    title.textContent = sec.title;
-
-    const stat = document.createElement('div');
-    stat.className = 'sec-stat';
-    stat.id = 'stat-' + sec.id;
-    stat.textContent = sec.items.length + '항목';
-
-    const arrow = document.createElement('div');
-    arrow.className = 'arrow';
-    arrow.id = 'arr-' + sec.id;
-    arrow.textContent = '▼';
-
-    head.appendChild(dot);
-    head.appendChild(title);
-    head.appendChild(stat);
-    head.appendChild(arrow);
-
-    const body = document.createElement('div');
-    body.className = 'sec-body';
-    body.id = 'body-' + sec.id;
-
-    sec.items.forEach((item, i) => {
-      const row = document.createElement('div');
-      row.className = 'item';
-
-      const box = document.createElement('div');
-      box.className = 'box';
-
-      const right = document.createElement('div');
-      right.style.flex = '1';
-
-      const lbl = document.createElement('div');
-      lbl.className = 'lbl';
-      lbl.textContent = item.l;
-
-      (item.t || []).forEach(t => {
-        const tag = document.createElement('span');
-        tag.className = 'tag ' + t;
-        tag.textContent = t === 'urg' ? '필수' : t === 'doc' ? '서류' : '질문';
-        lbl.appendChild(tag);
-      });
-
-      right.appendChild(lbl);
-
-      if (item.n) {
-        const nt = document.createElement('div');
-        nt.className = 'nt';
-        nt.textContent = item.n;
-        right.appendChild(nt);
-      }
-
-      row.appendChild(box);
-      row.appendChild(right);
-
-      row.addEventListener('click', () => {
-        row.classList.toggle('done');
-        updateProg();
-      });
-
-      body.appendChild(row);
-    });
-
-    let open = true;
-    head.addEventListener('click', () => {
-      open = !open;
-      body.style.display = open ? '' : 'none';
-      arrow.classList.toggle('closed', !open);
-    });
-
-    wrap.appendChild(head);
-    wrap.appendChild(body);
-    root.appendChild(wrap);
-  });
-
-  updateProg();
-}
-
-function updateProg() {
-  const all = document.querySelectorAll('.item');
-  const done = document.querySelectorAll('.item.done');
-  const pct = all.length ? Math.round(done.length / all.length * 100) : 0;
-  document.getElementById('pfill').style.width = pct + '%';
-  document.getElementById('plabel').textContent = done.length + ' / ' + all.length + ' 완료';
-}
-
-build();
-</script>
 </body>
 </html>
